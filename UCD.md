@@ -1,3 +1,6 @@
+## Use Case Diagram
+
+```mermaid
 usecaseDiagram
 actor "Developer / CI-CD System" as Dev
 actor "Deployment Operator" as Ops
