@@ -17,10 +17,6 @@ The following diagram represents the functional behavior of the system and the i
 
 ![UML Use Case Diagram](./UseCase_ContainerDeployment.png)
 
-
-> **Note:**  
-> Replace `uml_usecase_diagram.png` with the actual filename of the uploaded UML image if different.
-
 ---
 
 ##  Actors
