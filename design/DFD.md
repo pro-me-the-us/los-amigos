@@ -8,6 +8,8 @@ The diagrams illustrate how data moves through the system, the interactions with
 ## Level 0 DFD (Context Diagram)
 
 The **Level 0 DFD** represents the system as a single process and shows its interaction with external entities.
+### Diagram
+![Level 0 DFD](../diagrams/dfd/Level0DFD.png)
 
 ### External Entities
 - **Developer** – Initiates deployment requests and receives deployment status.
@@ -22,14 +24,16 @@ The **Level 0 DFD** represents the system as a single process and shows its inte
 - Configuration Updates
 - System Logs
 
-### Diagram
-![Level 0 DFD](../diagrams/dfd/Level0DFD.png)
+
 
 ---
 
 ## Level 1 DFD (Detailed System Decomposition)
 
 The **Level 1 DFD** expands the main system into detailed sub-processes, showing internal logic and data stores.
+### Diagram
+![Level 1 DFD](../diagrams/dfd/level1DFD.png)
+
 
 ### Processes
 1. **Authenticate User**  
@@ -58,8 +62,6 @@ The **Level 1 DFD** expands the main system into detailed sub-processes, showing
 - Rollback Command
 - Log Records
 
-### Diagram
-![Level 1 DFD](../diagrams/dfd/level1DFD.png)
 
 ---
 
