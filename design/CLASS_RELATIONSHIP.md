@@ -3,7 +3,7 @@
 This document outlines the structural connections between classes in the deployment system.
 
 ## UML Diagram Reference
-![System UML Diagram](UML.png)
+![System UML Diagram](../diagrams/uml/UML.png)
 
 ---
 

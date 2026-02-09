@@ -1,12 +1,12 @@
 # Container Deployment and Rollback Automation System
 
-![System Class Diagram](classes.png)
+![System Class Diagram](../diagrams/uml/classes.png)
 
 This document provides a technical overview of the classes within the Container Deployment and Rollback Automation System. 
 
 ---
 
-## 🛠 System Overview
+##  System Overview
 The system is color-coded by functional module to ensure a clean separation of concerns:
 * 🔴 **Red:** Authentication and Authorization
 * 🔵 **Blue:** Deployment and Version Management
@@ -15,7 +15,7 @@ The system is color-coded by functional module to ensure a clean separation of c
 
 ---
 
-## 🔐 Authentication Module (Red)
+##  Authentication Module (Red)
 Manages user identity and controls access to administrative functions.
 
 | Class | Responsibility |
@@ -26,7 +26,7 @@ Manages user identity and controls access to administrative functions.
 
 ---
 
-## 🚀 Deployment Module (Blue)
+##  Deployment Module (Blue)
 Handles the lifecycle of application containers and versioning.
 
 
@@ -39,7 +39,7 @@ Handles the lifecycle of application containers and versioning.
 
 ---
 
-## 📝 Logging Module (Green)
+##  Logging Module (Green)
 Ensures all system actions are recorded for debugging and security audits.
 
 * **LogService**: The logic layer used by other modules to `logInfo()` or `logError()` during operations.
@@ -48,7 +48,7 @@ Ensures all system actions are recorded for debugging and security audits.
 
 ---
 
-## 🔄 Rollback & Health Module (Yellow)
+##  Rollback & Health Module (Yellow)
 Automates the detection of failures and restoration of service.
 
 
@@ -60,7 +60,7 @@ Automates the detection of failures and restoration of service.
 
 ---
 
-## ⚙️ How the System Operates
+##  How the System Operates
 1.  **Request:** A developer initiates a deployment through the **DeploymentController**.
 2.  **Verify:** The **AuthenticationService** ensures the user has the correct permissions.
 3.  **Deploy:** The **DeploymentService** retrieves the image from the **VersionRepository** and instructs the **DeploymentPlatformClient** to run it.
