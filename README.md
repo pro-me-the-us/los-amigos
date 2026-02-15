@@ -1,5 +1,7 @@
 # Argus : Container Deployment and Rollback Automation System
 
+![argus icon](design/argus.png)
+
 ## Overview
 This project is developed as part of the **Software Engineering Lab (Semester 6)**.  
 The objective of this system is to automate **container-based application deployment** and provide a reliable **rollback mechanism** in case a deployment fails.
