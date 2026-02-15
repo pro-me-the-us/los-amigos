@@ -82,7 +82,6 @@ The system follows a **layered structure** with clearly separated responsibiliti
 
 ---
 
-
 ## B. Why This Architecture is the Best Choice
 
 ### 1. Scalability
