@@ -15,7 +15,7 @@ This repository contains the **UML Use Case Diagram** for the system, which has 
 
 The following diagram represents the functional behavior of the system and the interactions between users, external services, and internal system processes:
 
-![UML Use Case Diagram](./UseCase_ContainerDeployment.png)
+![UML Use Case Diagram](../diagrams/deployment/UseCase_ContainerDeployment.png)
 
 ---
 
