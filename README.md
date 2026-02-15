@@ -1,4 +1,4 @@
-# Container Deployment and Rollback Automation System
+# Argus : Container Deployment and Rollback Automation System
 
 ## Overview
 This project is developed as part of the **Software Engineering Lab (Semester 6)**.  
