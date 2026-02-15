@@ -122,3 +122,127 @@ The system follows a **layered structure** with clearly separated responsibiliti
 * Mock repositories/platform clients enable integration testing.
 
 ---
+
+## II. Components Present in the System (Application Components)
+
+### 1. Authentication & User Management
+
+* **`AuthenticationService`**
+
+  * Validates credentials and tokens.
+* **`User`**
+
+  * Represents developers/admin roles.
+
+---
+
+### 2. Deployment Management
+
+* **`DeploymentController`**
+
+  * Accepts deployment requests.
+* **`DeploymentService`**
+
+  * Coordinates full deployment workflow.
+* **`Deployment`**
+
+  * Represents a deployment instance.
+* **`ApplicationVersion`**
+
+  * Metadata of application version.
+
+---
+
+### 3. Platform Integration
+
+* **`DeploymentPlatformClient`**
+
+  * Executes:
+
+    * `deployContainer()`
+    * `rollbackContainer()`
+  * Acts as adapter to container infrastructure.
+
+---
+
+### 4. Health Monitoring & Failure Detection
+
+* **`HealthCheckService`**
+
+  * Performs runtime validation after deployment.
+* **`HealthReport`**
+
+  * Encapsulates system health status.
+* **`FailureDetectionService`**
+
+  * Determines if rollback is required.
+
+---
+
+### 5. Rollback Management
+
+* **`RollbackService`**
+
+  * Initiates rollback to last stable version.
+* **`StableVersionRepository`**
+
+  * Stores last known stable build.
+
+---
+
+### 6. Version & Deployment Persistence
+
+* **`VersionRepository`**
+
+  * Stores version metadata.
+* **`DeploymentRepository`**
+
+  * Stores deployment history.
+
+---
+
+### 7. Logging & Observability
+
+* **`LogService`**
+
+  * Centralized logging interface.
+* **`LogRepository`**
+
+  * Persists logs.
+* **`LogEntry`**
+
+  * Represents structured log data.
+* **`AdminController`**
+
+  * Allows administrators to inspect logs.
+
+---
+
+## Overall Workflow (Execution Flow)
+
+```
+Developer → DeploymentController
+          → AuthenticationService
+          → DeploymentService
+              → DeploymentPlatformClient (deploy)
+              → HealthCheckService
+                  → FailureDetectionService
+                      → (If failure) RollbackService
+              → LogService (store logs)
+          → Status Returned to Developer/Admin
+```
+
+---
+
+## Conclusion
+
+The system uses a **Layered Service-Oriented Architecture** because it:
+
+* Separates responsibilities cleanly.
+* Enables scalable deployment automation.
+* Ensures reliability through isolated rollback and monitoring services.
+* Is maintainable, testable, and extensible for real-world DevOps environments.
+
+This architecture is ideal for **automated container deployment systems**, where modularity, fault tolerance, and integration flexibility are critical.
+
+---
