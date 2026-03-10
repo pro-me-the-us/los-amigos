@@ -97,9 +97,3 @@
 - Perform regular image vulnerability scanning.
 
 ---
-
-If needed, this architecture can be customized for:
-- AWS
-- Azure
-- GCP
-- On-premises deployment
