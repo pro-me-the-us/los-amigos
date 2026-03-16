@@ -1,0 +1,12 @@
+{
+  "name": "argus-src",
+  "version": "1.0.0",
+  "main": "demo.js",
+  "scripts": {
+    "demo": "node demo.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
