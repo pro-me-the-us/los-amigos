@@ -1,16 +1,16 @@
 {
   "name": "argus-src",
   "version": "1.0.0",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs",
-    "test": "tests"
+  "main": "demo.js",
+  "bin": {
+    "argus": "./CLI.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+    "demo": "node demo.js",
+    "cli": "node CLI.js",
+    "deploy-app": "node CLI.js deploy-app",
+    "rollback": "node CLI.js rollback",
+    "show-logs": "node CLI.js show-logs",
+    "list-versions": "node CLI.js list-versions"
+  }
 }
