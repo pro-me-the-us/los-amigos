@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "demo.js",
   "bin": {
-    "argus": "./CLI.js"
+    "argus": "CLI.js"
   },
   "scripts": {
     "demo": "node demo.js",
@@ -12,5 +12,17 @@
     "rollback": "node CLI.js rollback",
     "show-logs": "node CLI.js show-logs",
     "list-versions": "node CLI.js list-versions"
+  },
+  "description": "",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.2.1"
   }
 }
