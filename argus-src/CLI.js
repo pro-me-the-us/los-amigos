@@ -13,6 +13,7 @@ Commands:
     argus demo
     argus health-check <deploymentId> [url]
     argus deploy-app --image=myapp:v2 [--url=https://example.com/health] [--deploymentId=DEP-123]
+    argus list-versions [imageName]
     argus rollback --version=v1 --image=myapp [--deploymentId=DEP-123]
     argus show-logs
 `);
@@ -79,30 +80,29 @@ async function handleDeployApp(args) {
     }
 
     const deploymentId = flags.deploymentId || `DEP-${Date.now()}`;
-    const imageName = image.split(":")[0];
 
     try {
-        const response = await axios.post(`${BASE_URL}/analyze`, {
+        const response = await axios.post(`${BASE_URL}/deploy`, {
             deploymentId,
-            url,
-            previousVersion: "v1",
-            imageName
+            image,
+            url
         });
 
         console.log("\n=== DEPLOYMENT RESULT ===");
+        console.log("Deployment:", response.data.deployment);
         console.log("Health Report:", response.data.healthReport);
         console.log("Failure Analysis:", response.data.failureResult);
 
         if (response.data.rollbackResult) {
             console.log("Rollback Triggered:", response.data.rollbackResult);
         } else {
-            console.log("Deployment Successful ✅");
+            console.log("Deployment Successful");
         }
-
     } catch (err) {
         console.error("Error:", err.response?.data || err.message);
     }
 }
+
 
 
 async function main() {
@@ -204,6 +204,35 @@ async function main() {
 
         return;
     }
+
+    if (command === "list-versions" || command === "list-version") {
+    try {
+        const [imageName] = args;
+        const query = imageName
+            ? `?imageName=${encodeURIComponent(imageName)}`
+            : "";
+
+        const response = await axios.get(`${BASE_URL}/versions${query}`);
+        const versions = response.data;
+
+        if (versions.length === 0) {
+            console.log("No versions found.");
+            return;
+        }
+
+        console.log("Stored Versions:");
+        versions.forEach((version, index) => {
+            console.log(
+                `${index + 1}. ${version.imageName}:${version.version} | stable=${version.stable} | deploymentId=${version.deploymentId} | ${version.timestamp}`
+            );
+        });
+    } catch (err) {
+        console.error("Error:", err.response?.data || err.message);
+    }
+
+    return;
+}
+
 
     console.log(`Unknown command: ${command}`);
     showHelp();
