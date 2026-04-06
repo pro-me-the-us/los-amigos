@@ -11,7 +11,7 @@ const { DeploymentManagementService } = require("./services/deploymentManagement
 const app = express();
 app.use(express.json());
 
-const PORT = 3000;
+const PORT = 5000;
 
 app.get("/", (req, res) => {
     res.send("Argus Server Running");
@@ -51,7 +51,7 @@ app.post("/detect-failure", (req, res) => {
     }
 });
 
-app.post("/rollback", (req, res) => {
+app.post("/rollback", async (req, res) => {
     const { deploymentId, previousVersion, imageName } = req.body;
 
     if (!deploymentId || !previousVersion || !imageName) {
@@ -61,7 +61,7 @@ app.post("/rollback", (req, res) => {
     }
 
     try {
-        const result = RollbackService.rollbackDeployment(
+        const result = await RollbackService.rollbackDeployment(
             deploymentId,
             previousVersion,
             imageName
