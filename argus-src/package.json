@@ -6,12 +6,15 @@
     "argus": "CLI.js"
   },
   "scripts": {
+    "start": "node src/server.js",
     "demo": "node demo.js",
     "cli": "node CLI.js",
     "deploy-app": "node CLI.js deploy-app",
     "rollback": "node CLI.js rollback",
     "show-logs": "node CLI.js show-logs",
-    "list-versions": "node CLI.js list-versions"
+    "list-versions": "node CLI.js list-versions",
+    "show-interactions": "node CLI.js show-interactions",
+    "test": "node tests/run-tests.js"
   },
   "description": "",
   "directories": {

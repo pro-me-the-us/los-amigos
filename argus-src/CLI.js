@@ -16,6 +16,7 @@ Commands:
     argus list-versions [imageName]
     argus rollback --version=v1 --image=myapp [--deploymentId=DEP-123]
     argus show-logs
+    argus show-interactions
 `);
 }
 
@@ -101,6 +102,33 @@ async function handleDeployApp(args) {
     } catch (err) {
         console.error("FULL ERROR:");
         console.error(err);
+    }
+}
+
+async function handleShowInteractions() {
+    try {
+        const [interactionRes, modulesRes] = await Promise.all([
+            axios.get(`${BASE_URL}/ui-interactions`),
+            axios.get(`${BASE_URL}/business-modules`)
+        ]);
+
+        const interactions = interactionRes.data;
+        const modules = modulesRes.data;
+
+        console.log("\n=== CORE BUSINESS MODULES ===");
+        modules.forEach((module, index) => {
+            console.log(`${index + 1}. ${module.name} (${module.id})`);
+            console.log(`   Services: ${module.implementedBy.join(", ")}`);
+            console.log(`   Responsibilities: ${module.responsibilities.join(" | ")}`);
+        });
+
+        console.log("\n=== PRESENTATION -> BUSINESS INTERACTIONS ===");
+        Object.entries(interactions).forEach(([uiComponent, linkedModules]) => {
+            console.log(`- ${uiComponent}`);
+            console.log(`  -> ${linkedModules.join(", ")}`);
+        });
+    } catch (err) {
+        console.error("Error:", err.response?.data || err.message);
     }
 }
 
@@ -203,6 +231,11 @@ async function main() {
             console.error("Error:", err.response?.data || err.message);
         }
 
+        return;
+    }
+
+    if (command === "show-interactions" || command === "show-modules") {
+        await handleShowInteractions();
         return;
     }
 
