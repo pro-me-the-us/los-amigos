@@ -2,7 +2,7 @@
 
 const axios = require("axios");
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "http://localhost:5000";
 const DEFAULT_HEALTH_URL = "https://jsonplaceholder.typicode.com/posts/1";
 
 function showHelp() {
@@ -99,7 +99,8 @@ async function handleDeployApp(args) {
             console.log("Deployment Successful");
         }
     } catch (err) {
-        console.error("Error:", err.response?.data || err.message);
+        console.error("FULL ERROR:");
+        console.error(err);
     }
 }
 

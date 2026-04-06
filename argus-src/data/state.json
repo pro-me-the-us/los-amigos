@@ -1,0 +1,300 @@
+{
+  "logs": [
+    {
+      "level": "ERROR",
+      "timestamp": "2026-03-23T18:49:06.975Z",
+      "deploymentId": "dep1",
+      "message": "Health check failed: "
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-03-23T18:49:06.978Z",
+      "deploymentId": "dep1",
+      "message": "Deployment failure detected"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-03-23T18:49:06.978Z",
+      "deploymentId": "dep1",
+      "message": "Initiating rollback to version v1"
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-03-23T18:50:00.865Z",
+      "deploymentId": "dep1",
+      "message": "Health check failed: connect ECONNREFUSED 127.0.0.1:443"
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-03-23T18:50:13.127Z",
+      "deploymentId": "dep2",
+      "message": "Health check failed: connect ECONNREFUSED 127.0.0.1:443"
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-03-23T18:50:27.644Z",
+      "deploymentId": "dep3",
+      "message": "Health check failed: "
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-03-23T18:50:57.292Z",
+      "deploymentId": "dep1",
+      "message": "Deployment is healthy"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-03-23T18:51:14.370Z",
+      "deploymentId": "dep2",
+      "message": "Initiating rollback to version v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-03-23T18:54:38.830Z",
+      "deploymentId": "DEP-1001",
+      "message": "Health check successful"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-03-23T18:54:38.830Z",
+      "deploymentId": "DEP-1001",
+      "message": "Deployment is healthy"
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-03-23T18:54:40.102Z",
+      "deploymentId": "DEP-1001",
+      "message": "Health check failed: getaddrinfo ENOTFOUND invalid-url-for-demo"
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-03-23T18:54:40.105Z",
+      "deploymentId": "DEP-1001",
+      "message": "Deployment failure detected"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-03-23T18:54:40.106Z",
+      "deploymentId": "DEP-1001",
+      "message": "Initiating rollback to version 1.0"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-03-23T18:54:40.461Z",
+      "deploymentId": "dep1",
+      "message": "Health check successful"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-03-23T18:54:40.466Z",
+      "deploymentId": "dep1",
+      "message": "Deployment is healthy"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-03-23T18:54:40.767Z",
+      "deploymentId": "DEP-1774292080584",
+      "message": "Health check successful"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-03-23T18:54:40.769Z",
+      "deploymentId": "DEP-1774292080584",
+      "message": "Deployment is healthy"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-03-23T18:54:40.906Z",
+      "deploymentId": "DEP-1774292080888",
+      "message": "Initiating rollback to version v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-03-23T18:54:55.512Z",
+      "deploymentId": "DEP-1774292095007",
+      "message": "Health check successful"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-03-23T18:54:55.513Z",
+      "deploymentId": "DEP-1774292095007",
+      "message": "Deployment is healthy"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-03-23T18:55:06.699Z",
+      "deploymentId": "DEP-1774292106681",
+      "message": "Initiating rollback to version v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-03-23T18:57:26.233Z",
+      "deploymentId": "DEP-1774292246209",
+      "message": "Initiating rollback to version v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T15:48:54.826Z",
+      "deploymentId": "DEP-123",
+      "message": "Deploying myapp:v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T15:51:40.926Z",
+      "deploymentId": "DEP-123",
+      "message": "Deploying myapp:v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T15:52:01.876Z",
+      "deploymentId": "DEP-123",
+      "message": "Deploying myapp:v1"
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-04-06T15:52:07.424Z",
+      "deploymentId": "DEP-123",
+      "message": "Health check failed: socket hang up"
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-04-06T15:52:07.431Z",
+      "deploymentId": "DEP-123",
+      "message": "Deployment failure detected"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T16:01:04.347Z",
+      "deploymentId": "DEP-123",
+      "message": "Deploying myapp:v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T16:01:24.329Z",
+      "deploymentId": "DEP-111",
+      "message": "Deploying myapp:v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T16:01:29.677Z",
+      "deploymentId": "DEP-111",
+      "message": "Deployment is healthy"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T16:01:59.076Z",
+      "deploymentId": "DEP-111",
+      "message": "Deployment is healthy"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T17:36:35.597Z",
+      "deploymentId": "DEP-111",
+      "message": "Deployment is healthy"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T18:49:54.211Z",
+      "deploymentId": "DEP-111",
+      "message": "Deployment is healthy"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T18:49:59.143Z",
+      "deploymentId": "DEP-111",
+      "message": "Deploying myapp:v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T18:50:02.690Z",
+      "deploymentId": "DEP-112",
+      "message": "Deploying myapp:v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T18:50:08.153Z",
+      "deploymentId": "DEP-112",
+      "message": "Deployment is healthy"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T18:52:16.020Z",
+      "deploymentId": "DEP-113",
+      "message": "Deploying myapp:v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T18:52:21.398Z",
+      "deploymentId": "DEP-113",
+      "message": "Deployment is healthy"
+    }
+  ],
+  "versions": [
+    {
+      "imageName": "myapp",
+      "version": "v1",
+      "deploymentId": "DEP-123",
+      "stable": false,
+      "timestamp": "2026-04-06T15:52:07.435Z"
+    },
+    {
+      "imageName": "myapp",
+      "version": "v1",
+      "deploymentId": "DEP-111",
+      "stable": true,
+      "timestamp": "2026-04-06T16:01:29.680Z"
+    },
+    {
+      "imageName": "myapp",
+      "version": "v1",
+      "deploymentId": "DEP-112",
+      "stable": true,
+      "timestamp": "2026-04-06T18:50:08.157Z"
+    },
+    {
+      "imageName": "myapp",
+      "version": "v1",
+      "deploymentId": "DEP-113",
+      "stable": true,
+      "timestamp": "2026-04-06T18:52:21.402Z"
+    }
+  ],
+  "deployments": [
+    {
+      "deploymentId": "DEP-123",
+      "imageName": "myapp",
+      "version": "v1",
+      "url": "http://localhost:3123",
+      "status": "FailedNoStableVersion",
+      "rollbackVersion": null,
+      "timestamp": "2026-04-06T15:52:07.438Z"
+    },
+    {
+      "deploymentId": "DEP-111",
+      "imageName": "myapp",
+      "version": "v1",
+      "url": "http://localhost:3111",
+      "status": "Healthy",
+      "rollbackVersion": null,
+      "timestamp": "2026-04-06T16:01:29.682Z"
+    },
+    {
+      "deploymentId": "DEP-112",
+      "imageName": "myapp",
+      "version": "v1",
+      "url": "http://localhost:3112",
+      "status": "Healthy",
+      "rollbackVersion": null,
+      "timestamp": "2026-04-06T18:50:08.159Z"
+    },
+    {
+      "deploymentId": "DEP-113",
+      "imageName": "myapp",
+      "version": "v1",
+      "url": "http://localhost:3113",
+      "status": "Healthy",
+      "rollbackVersion": null,
+      "timestamp": "2026-04-06T18:52:21.403Z"
+    }
+  ]
+}
