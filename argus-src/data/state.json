@@ -227,6 +227,216 @@
       "timestamp": "2026-04-06T18:52:21.398Z",
       "deploymentId": "DEP-113",
       "message": "Deployment is healthy"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T19:33:32.989Z",
+      "deploymentId": "DEP-112",
+      "message": "Deploying myapp:v1"
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-04-06T19:33:38.770Z",
+      "deploymentId": "DEP-112",
+      "message": "Deployment failure detected"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T19:33:38.774Z",
+      "deploymentId": "DEP-112",
+      "message": "Rolling back to myapp:v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T19:33:49.515Z",
+      "deploymentId": "DEP-111",
+      "message": "Deploying myapp:v1"
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-04-06T19:33:55.037Z",
+      "deploymentId": "DEP-111",
+      "message": "Deployment failure detected"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T19:33:55.044Z",
+      "deploymentId": "DEP-111",
+      "message": "Rolling back to myapp:v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T19:34:18.490Z",
+      "deploymentId": "DEP-123456787",
+      "message": "Deploying myapp:v1"
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-04-06T19:34:23.983Z",
+      "deploymentId": "DEP-123456787",
+      "message": "Deployment failure detected"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T19:34:23.989Z",
+      "deploymentId": "DEP-123456787",
+      "message": "Rolling back to myapp:v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T19:34:46.828Z",
+      "deploymentId": "DEP-1775504086790",
+      "message": "Deploying myapp:v1"
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-04-06T19:34:52.259Z",
+      "deploymentId": "DEP-1775504086790",
+      "message": "Deployment failure detected"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T19:34:52.262Z",
+      "deploymentId": "DEP-1775504086790",
+      "message": "Rolling back to myapp:v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T19:35:05.278Z",
+      "deploymentId": "APP-1212",
+      "message": "Deploying myapp:v1"
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-04-06T19:35:10.792Z",
+      "deploymentId": "APP-1212",
+      "message": "Deployment failure detected"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T19:35:10.797Z",
+      "deploymentId": "APP-1212",
+      "message": "Rolling back to myapp:v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T19:36:47.915Z",
+      "deploymentId": "APP-1212",
+      "message": "Deploying myapp:v1"
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-04-06T19:36:53.440Z",
+      "deploymentId": "APP-1212",
+      "message": "Deployment failure detected"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T19:36:53.448Z",
+      "deploymentId": "APP-1212",
+      "message": "Rolling back to myapp:v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T19:46:10.442Z",
+      "deploymentId": "APP-1212co",
+      "message": "Deploying myapp:v1"
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-04-06T19:46:16.084Z",
+      "deploymentId": "APP-1212co",
+      "message": "Deployment failure detected"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T19:46:16.087Z",
+      "deploymentId": "APP-1212co",
+      "message": "Rolling back to myapp:v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T19:50:55.314Z",
+      "deploymentId": "APP-1212co",
+      "message": "Deploying myapp:v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T19:51:01.164Z",
+      "deploymentId": "APP-1212co",
+      "message": "Deployment is healthy"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T19:51:59.970Z",
+      "deploymentId": "APP-1212co",
+      "message": "Deployment is healthy"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T20:08:58.054Z",
+      "deploymentId": "DEP-1001",
+      "message": "Deployment is healthy"
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-04-06T20:08:59.450Z",
+      "deploymentId": "DEP-1001",
+      "message": "Health check failed: Port should be >= 0 and < 65536. Received type number (NaN)."
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-04-06T20:08:59.451Z",
+      "deploymentId": "DEP-1001",
+      "message": "Deployment failure detected"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T20:08:59.452Z",
+      "deploymentId": "DEP-1001",
+      "message": "Rolling back to sample-app:1.0"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T20:16:04.572Z",
+      "deploymentId": "DEP-1001",
+      "message": "Deployment is healthy"
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-04-06T20:16:05.982Z",
+      "deploymentId": "DEP-1001",
+      "message": "Health check failed: Port should be >= 0 and < 65536. Received type number (NaN)."
+    },
+    {
+      "level": "ERROR",
+      "timestamp": "2026-04-06T20:16:05.983Z",
+      "deploymentId": "DEP-1001",
+      "message": "Deployment failure detected"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T20:16:05.985Z",
+      "deploymentId": "DEP-1001",
+      "message": "Rolling back to sample-app:1.0"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T20:17:29.830Z",
+      "deploymentId": "APP-1212co",
+      "message": "Deploying myapp:v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T20:17:38.093Z",
+      "deploymentId": "APP-1212cb",
+      "message": "Deploying myapp:v1"
+    },
+    {
+      "level": "INFO",
+      "timestamp": "2026-04-06T20:17:44.101Z",
+      "deploymentId": "APP-1212cb",
+      "message": "Deployment is healthy"
     }
   ],
   "versions": [
@@ -257,6 +467,20 @@
       "deploymentId": "DEP-113",
       "stable": true,
       "timestamp": "2026-04-06T18:52:21.402Z"
+    },
+    {
+      "imageName": "myapp",
+      "version": "v1",
+      "deploymentId": "APP-1212co",
+      "stable": true,
+      "timestamp": "2026-04-06T19:51:01.168Z"
+    },
+    {
+      "imageName": "myapp",
+      "version": "v1",
+      "deploymentId": "APP-1212cb",
+      "stable": true,
+      "timestamp": "2026-04-06T20:17:44.102Z"
     }
   ],
   "deployments": [
@@ -295,6 +519,25 @@
       "status": "Healthy",
       "rollbackVersion": null,
       "timestamp": "2026-04-06T18:52:21.403Z"
+    },
+    {
+      "deploymentId": "APP-1212co",
+      "imageName": "myapp",
+      "version": "v1",
+      "url": "http://localhost:3212",
+      "status": "Healthy",
+      "rollbackVersion": null,
+      "timestamp": "2026-04-06T19:51:01.169Z"
+    },
+    {
+      "deploymentId": "APP-1212cb",
+      "imageName": "myapp",
+      "version": "v1",
+      "url": "http://localhost:3212",
+      "healthCheckUrl": "https://jsonplaceholder.typicode.com/posts/1",
+      "status": "Healthy",
+      "rollbackVersion": null,
+      "timestamp": "2026-04-06T20:17:44.103Z"
     }
   ]
 }

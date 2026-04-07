@@ -16,13 +16,14 @@ class DeploymentManagementService {
         return { imageName, version };
     }
 
-    static async deployApplication({ deploymentId, image }) {
+    static async deployApplication({ deploymentId, image, url }) {
 
         const { imageName, version } = this.parseImage(image);
 
         const containerName = `deployment_${deploymentId}`;
         const port = 3000 + parseInt(deploymentId.replace(/\D/g, "")) % 1000;
-        const url = `http://localhost:${port}`;
+        const deployedServiceUrl = `http://localhost:${port}`;
+        const healthCheckUrl = url || deployedServiceUrl;
 
         LogService.logInfo(deploymentId, `Deploying ${imageName}:${version}`);
 
@@ -38,7 +39,7 @@ class DeploymentManagementService {
         const analysisResult =
             await DeploymentAnalysisService.analyzeDeployment({
                 deploymentId,
-                url,
+                url: healthCheckUrl,
                 previousVersion: lastStableVersion?.version,
                 imageName
             });
@@ -57,7 +58,8 @@ class DeploymentManagementService {
             deploymentId,
             imageName,
             version,
-            url,
+            url: deployedServiceUrl,
+            healthCheckUrl,
             status: stable
                 ? "Healthy"
                 : analysisResult.rollbackResult
@@ -68,7 +70,13 @@ class DeploymentManagementService {
         });
 
         return {
-            deployment: { deploymentId, imageName, version, url },
+            deployment: {
+                deploymentId,
+                imageName,
+                version,
+                url: deployedServiceUrl,
+                healthCheckUrl
+            },
             ...analysisResult
         };
     }

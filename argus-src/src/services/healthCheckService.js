@@ -50,7 +50,6 @@ class HealthCheckService {
                     type: "TCP"
                 };
             }
-
             return {
                 deploymentId,
                 status: "Unhealthy"
