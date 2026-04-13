@@ -1,4 +1,5 @@
 node_modules/
+<<<<<<< HEAD
 .env
 .DS_Store
 dist/
@@ -6,3 +7,6 @@ logs/
 *.log
 data/state.json
 
+=======
+.env
+>>>>>>> ee5b350 (Added DAL implementation and cleaned node_modules)
