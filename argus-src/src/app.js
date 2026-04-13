@@ -1,11 +1,11 @@
 const express = require("express");
 const { BusinessLogicLayer, ValidationError } = require("./services/services");
+const LogRepository = require("../dal/repositories/LogRepository"); // ← DAL
 
 function sendServiceError(res, error) {
     if (error instanceof ValidationError) {
         return res.status(400).json({ error: error.message });
     }
-
     return res.status(500).json({ error: error.message });
 }
 
@@ -52,13 +52,32 @@ function createApp() {
         }
     });
 
-    app.get("/logs", (req, res) => {
+    // ── /logs ──────────────────────────────────────────────────────────────────
+    // Now reads directly from MongoDB via the DAL LogRepository.
+    // Optional query params:
+    //   ?level=error|warn|info|debug
+    //   ?limit=50
+    //   ?deploymentId=<objectId>
+    app.get("/logs", async (req, res) => {
         try {
-            res.json(BusinessLogicLayer.fetchLogs());
+            const limit        = parseInt(req.query.limit) || 100;
+            const { level, deploymentId } = req.query;
+
+            let logs;
+            if (deploymentId) {
+                logs = await LogRepository.findByDeployment(deploymentId, limit);
+            } else if (level) {
+                logs = await LogRepository.findByLevel(level, limit);
+            } else {
+                logs = await LogRepository.listRecent(limit);
+            }
+
+            res.json({ success: true, count: logs.length, logs });
         } catch (error) {
             sendServiceError(res, error);
         }
     });
+    // ──────────────────────────────────────────────────────────────────────────
 
     app.get("/versions", (req, res) => {
         try {
