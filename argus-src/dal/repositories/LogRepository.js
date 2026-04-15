@@ -23,12 +23,22 @@ class LogRepository {
     const doc = {
       level:        logData.level || 'info',
       message:      logData.message,
-      service:      logData.service || null,
-      deploymentId: logData.deploymentId || null,
-      appName:      logData.appName || null,
       metadata:     logData.metadata || {},
-      timestamp:    new Date()
+      timestamp:    logData.timestamp ? new Date(logData.timestamp) : new Date()
     };
+
+    if (typeof logData.service === 'string' && logData.service.trim()) {
+      doc.service = logData.service;
+    }
+
+    if (typeof logData.deploymentId === 'string' && logData.deploymentId.trim()) {
+      doc.deploymentId = logData.deploymentId;
+    }
+
+    if (typeof logData.appName === 'string' && logData.appName.trim()) {
+      doc.appName = logData.appName;
+    }
+
     const result = await col.insertOne(doc);
     return result.insertedId.toString();
   }
@@ -58,9 +68,9 @@ class LogRepository {
    * Get all logs for a specific deployment.
    * @param {string} deploymentId
    */
-  async findByDeployment(deploymentId) {
+  async findByDeployment(deploymentId, limit = 100) {
     const col = await this._col();
-    return col.find({ deploymentId }).sort({ timestamp: 1 }).toArray();
+    return col.find({ deploymentId }).sort({ timestamp: -1 }).limit(limit).toArray();
   }
 
   /**
@@ -89,6 +99,15 @@ class LogRepository {
    */
   async findErrors(limit = 100) {
     return this.findByLevel('error', limit);
+  }
+
+  /**
+   * Get the most recent logs across all applications.
+   * @param {number} limit
+   */
+  async listRecent(limit = 100) {
+    const col = await this._col();
+    return col.find({}).sort({ timestamp: -1 }).limit(limit).toArray();
   }
 
   /**

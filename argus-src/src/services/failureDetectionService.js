@@ -6,7 +6,7 @@ class FailureDetectionService {
      * Analyzes health report to detect failure
      * @param {Object} healthReport
      */
-    static detectFailure(healthReport) {
+    static async detectFailure(healthReport) {
 
         if (!healthReport) {
             return { failure: true, reason: "Invalid health report" };
@@ -14,7 +14,7 @@ class FailureDetectionService {
 
         if (healthReport.status === "Healthy") {
 
-            LogService.logInfo(
+            await LogService.logInfo(
                 healthReport.deploymentId,
                 "Deployment is healthy"
             );
@@ -25,7 +25,7 @@ class FailureDetectionService {
             };
         }
 
-        LogService.logError(
+        await LogService.logError(
             healthReport.deploymentId,
             "Deployment failure detected"
         );

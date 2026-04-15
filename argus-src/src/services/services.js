@@ -39,12 +39,12 @@ class BusinessLogicLayer {
         return HealthCheckService.checkHealth(deploymentId, url);
     }
 
-    static detectFailure({ healthReport }) {
+    static async detectFailure({ healthReport }) {
         if (!healthReport || typeof healthReport !== "object") {
             throw new ValidationError("healthReport is required");
         }
 
-        return FailureDetectionService.detectFailure(healthReport);
+        return await FailureDetectionService.detectFailure(healthReport);
     }
 
     static async runRollback({ deploymentId, previousVersion, imageName }) {
@@ -59,11 +59,11 @@ class BusinessLogicLayer {
         );
     }
 
-    static fetchLogs() {
+    static async fetchLogs() {
         return LogService.fetchLogs();
     }
 
-    static listVersions(imageName) {
+    static async listVersions(imageName) {
         if (imageName !== undefined && imageName !== null) {
             requireString(imageName, "imageName");
         }

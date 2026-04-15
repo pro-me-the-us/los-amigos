@@ -1,6 +1,6 @@
 const express = require("express");
 const { BusinessLogicLayer, ValidationError } = require("./services/services");
-const LogRepository = require("../dal/repositories/LogRepository"); // ← DAL
+const { LogRepository } = require("../dal/index");
 
 function sendServiceError(res, error) {
     if (error instanceof ValidationError) {
@@ -34,9 +34,9 @@ function createApp() {
         }
     });
 
-    app.post("/detect-failure", (req, res) => {
+    app.post("/detect-failure", async (req, res) => {
         try {
-            const result = BusinessLogicLayer.detectFailure(req.body);
+            const result = await BusinessLogicLayer.detectFailure(req.body);
             res.json(result);
         } catch (error) {
             sendServiceError(res, error);
@@ -79,9 +79,9 @@ function createApp() {
     });
     // ──────────────────────────────────────────────────────────────────────────
 
-    app.get("/versions", (req, res) => {
+    app.get("/versions", async (req, res) => {
         try {
-            const result = BusinessLogicLayer.listVersions(req.query.imageName);
+            const result = await BusinessLogicLayer.listVersions(req.query.imageName);
             res.json(result);
         } catch (error) {
             sendServiceError(res, error);

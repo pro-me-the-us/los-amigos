@@ -100,8 +100,9 @@ async function handleDeployApp(args) {
             console.log("Deployment Successful");
         }
     } catch (err) {
-        console.error("FULL ERROR:");
-        console.error(err);
+        const serverMessage = err.response?.data?.error;
+        console.error("Deployment failed:", serverMessage || err.message);
+        console.error("Hint: use an image that exists locally or on Docker Hub, e.g. --image=nginx:latest");
     }
 }
 
@@ -210,12 +211,13 @@ async function main() {
         return;
     }
 
-    if (command === "show-logs") {
+    if (command === "show-logs" || command === "showlogs") {
         try {
             const response = await axios.get(`${BASE_URL}/logs`);
-            const logs = response.data;
+            const logs = response.data.logs || response.data;
+            const count = response.data.count ?? logs.length;
 
-            if (logs.length === 0) {
+            if (count === 0) {
                 console.log("No logs found.");
                 return;
             }
