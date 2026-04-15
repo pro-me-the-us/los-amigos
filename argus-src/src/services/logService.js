@@ -1,36 +1,36 @@
 const { appendLog, getLogs } = require("./stateService");
 
 class LogService {
-    static logInfo(deploymentId, message) {
+    static async persist(level, deploymentId, message, extras = {}) {
         const timestamp = new Date().toISOString();
-
         const entry = {
-            level: "INFO",
+            level,
             timestamp,
             deploymentId,
-            message
+            message,
+            service: extras.service || "LogService",
+            appName: extras.appName || null,
+            metadata: extras.metadata || {}
         };
 
-        console.log(`[INFO] ${timestamp} | ${deploymentId} | ${message}`);
-        appendLog(entry);
+        console.log(`[${level.toUpperCase()}] ${timestamp} | ${deploymentId} | ${message}`);
+        try {
+            await appendLog(entry);
+        } catch (error) {
+            console.error(`[LogService] Failed to persist log to MongoDB: ${error.message}`);
+        }
     }
 
-    static logError(deploymentId, message) {
-        const timestamp = new Date().toISOString();
-
-        const entry = {
-            level: "ERROR",
-            timestamp,
-            deploymentId,
-            message
-        };
-
-        console.error(`[ERROR] ${timestamp} | ${deploymentId} | ${message}`);
-        appendLog(entry);
+    static async logInfo(deploymentId, message, extras = {}) {
+        return this.persist("info", deploymentId, message, extras);
     }
 
-    static fetchLogs() {
-        return getLogs();
+    static async logError(deploymentId, message, extras = {}) {
+        return this.persist("error", deploymentId, message, extras);
+    }
+
+    static async fetchLogs(limit = 100) {
+        return getLogs(limit);
     }
 }
 

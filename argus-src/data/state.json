@@ -455,6 +455,78 @@
       "timestamp": "2026-04-13T04:59:23.438Z",
       "deploymentId": "deployment_DEP-1776056251368",
       "message": "Deployment is healthy"
+    },
+    {
+      "level": "info",
+      "timestamp": "2026-04-13T17:55:19.554Z",
+      "deploymentId": "DEP-1001",
+      "message": "Deployment is healthy"
+    },
+    {
+      "level": "error",
+      "timestamp": "2026-04-13T17:55:21.071Z",
+      "deploymentId": "DEP-1001",
+      "message": "Health check failed: Port should be >= 0 and < 65536. Received type number (NaN)."
+    },
+    {
+      "level": "error",
+      "timestamp": "2026-04-13T17:55:21.074Z",
+      "deploymentId": "DEP-1001",
+      "message": "Deployment failure detected"
+    },
+    {
+      "level": "info",
+      "timestamp": "2026-04-13T17:55:21.076Z",
+      "deploymentId": "DEP-1001",
+      "message": "Rolling back to sample-app:1.0"
+    },
+    {
+      "level": "info",
+      "timestamp": "2026-04-13T17:55:59.287Z",
+      "deploymentId": "DEP-1001",
+      "message": "Deployment is healthy"
+    },
+    {
+      "level": "info",
+      "timestamp": "2026-04-13T17:57:56.752Z",
+      "deploymentId": "DEP-1776103076295",
+      "message": "Deploying myapp:v2"
+    },
+    {
+      "level": "info",
+      "timestamp": "2026-04-13T18:01:51.932Z",
+      "deploymentId": "DEP-1776103311841",
+      "message": "Deploying nginx:latest"
+    },
+    {
+      "level": "info",
+      "timestamp": "2026-04-13T18:02:13.168Z",
+      "deploymentId": "DEP-1776103311841",
+      "message": "Deployment is healthy"
+    },
+    {
+      "level": "info",
+      "timestamp": "2026-04-13T18:04:08.568Z",
+      "deploymentId": "DEP-1001",
+      "message": "Deployment is healthy"
+    },
+    {
+      "level": "error",
+      "timestamp": "2026-04-13T18:04:09.971Z",
+      "deploymentId": "DEP-1001",
+      "message": "Health check failed: Port should be >= 0 and < 65536. Received type number (NaN)."
+    },
+    {
+      "level": "error",
+      "timestamp": "2026-04-13T18:04:09.974Z",
+      "deploymentId": "DEP-1001",
+      "message": "Deployment failure detected"
+    },
+    {
+      "level": "info",
+      "timestamp": "2026-04-13T18:04:09.976Z",
+      "deploymentId": "DEP-1001",
+      "message": "Rolling back to sample-app:1.0"
     }
   ],
   "versions": [
@@ -506,6 +578,13 @@
       "deploymentId": "DEP-1776056251368",
       "stable": true,
       "timestamp": "2026-04-13T04:57:40.540Z"
+    },
+    {
+      "imageName": "nginx",
+      "version": "latest",
+      "deploymentId": "DEP-1776103311841",
+      "stable": true,
+      "timestamp": "2026-04-13T18:02:13.171Z"
     }
   ],
   "deployments": [
@@ -573,6 +652,16 @@
       "status": "Healthy",
       "rollbackVersion": null,
       "timestamp": "2026-04-13T04:57:40.541Z"
+    },
+    {
+      "deploymentId": "DEP-1776103311841",
+      "imageName": "nginx",
+      "version": "latest",
+      "url": "http://localhost:3841",
+      "healthCheckUrl": "http://localhost:5000",
+      "status": "Healthy",
+      "rollbackVersion": null,
+      "timestamp": "2026-04-13T18:02:13.172Z"
     }
   ]
 }

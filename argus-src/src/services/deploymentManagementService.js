@@ -25,7 +25,7 @@ class DeploymentManagementService {
         const deployedServiceUrl = `http://localhost:${port}`;
         const healthCheckUrl = url || deployedServiceUrl;
 
-        LogService.logInfo(deploymentId, `Deploying ${imageName}:${version}`);
+        await LogService.logInfo(deploymentId, `Deploying ${imageName}:${version}`);
 
         await stopAndRemove(containerName);
 
@@ -34,7 +34,7 @@ class DeploymentManagementService {
         // wait for container to boot
         await new Promise(r => setTimeout(r, 5000));
 
-        const lastStableVersion = getLastStableVersion(imageName);
+        const lastStableVersion = await getLastStableVersion(imageName);
 
         const analysisResult =
             await DeploymentAnalysisService.analyzeDeployment({
@@ -46,7 +46,7 @@ class DeploymentManagementService {
 
         const stable = !analysisResult.failureResult.failure;
 
-        addVersion({
+        await addVersion({
             imageName,
             version,
             deploymentId,
@@ -54,7 +54,7 @@ class DeploymentManagementService {
             timestamp: new Date().toISOString()
         });
 
-        addDeployment({
+        await addDeployment({
             deploymentId,
             imageName,
             version,

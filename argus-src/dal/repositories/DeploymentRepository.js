@@ -23,7 +23,7 @@ class DeploymentRepository {
     const doc = {
       ...deploymentData,
       status: deploymentData.status || 'pending',
-      createdAt: new Date()
+      createdAt: deploymentData.createdAt ? new Date(deploymentData.createdAt) : new Date()
     };
     const result = await col.insertOne(doc);
     return result.insertedId.toString();
@@ -117,6 +117,14 @@ class DeploymentRepository {
   async findFailed() {
     const col = await this._col();
     return col.find({ status: 'failed' }).sort({ createdAt: -1 }).toArray();
+  }
+
+  /**
+   * Get all deployment records across all applications.
+   */
+  async listAll(limit = 1000) {
+    const col = await this._col();
+    return col.find({}).sort({ createdAt: -1 }).limit(limit).toArray();
   }
 
   /**
