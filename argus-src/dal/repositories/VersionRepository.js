@@ -22,7 +22,7 @@ class VersionRepository {
     const col = await this._col();
     const doc = {
       ...versionData,
-      createdAt: new Date()
+      createdAt: versionData.createdAt ? new Date(versionData.createdAt) : new Date()
     };
     const result = await col.insertOne(doc);
     return result.insertedId.toString();
@@ -73,6 +73,14 @@ class VersionRepository {
   async findRecent(appName, limit = 5) {
     const col = await this._col();
     return col.find({ appName }).sort({ createdAt: -1 }).limit(limit).toArray();
+  }
+
+  /**
+   * Get all versions across all applications.
+   */
+  async listAll(limit = 1000) {
+    const col = await this._col();
+    return col.find({}).sort({ createdAt: -1 }).limit(limit).toArray();
   }
 
   /**

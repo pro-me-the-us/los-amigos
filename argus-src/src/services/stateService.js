@@ -1,31 +1,21 @@
 const fs = require("fs");
 const path = require("path");
+const {
+    DeploymentRepository,
+    VersionRepository,
+    StableVersionRepository,
+    LogRepository
+} = require("../../dal/index");
 
-const STORE_PATH = path.join(__dirname, "..", "..", "data", "state.json");
+const LEGACY_STORE_PATH = path.join(__dirname, "..", "..", "data", "state.json");
 
-const DEFAULT_STATE = {
-    logs: [],
-    versions: [],
-    deployments: []
-};
-
-function ensureStore() {
-    const dir = path.dirname(STORE_PATH);
-
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
+function readLegacyState() {
+    if (!fs.existsSync(LEGACY_STORE_PATH)) {
+        return { logs: [], versions: [], deployments: [] };
     }
-
-    if (!fs.existsSync(STORE_PATH)) {
-        fs.writeFileSync(STORE_PATH, JSON.stringify(DEFAULT_STATE, null, 2), "utf8");
-    }
-}
-
-function readState() {
-    ensureStore();
 
     try {
-        const raw = fs.readFileSync(STORE_PATH, "utf8");
+        const raw = fs.readFileSync(LEGACY_STORE_PATH, "utf8");
         const parsed = JSON.parse(raw);
 
         return {
@@ -34,63 +24,216 @@ function readState() {
             deployments: Array.isArray(parsed.deployments) ? parsed.deployments : []
         };
     } catch (error) {
-        fs.writeFileSync(STORE_PATH, JSON.stringify(DEFAULT_STATE, null, 2), "utf8");
-        return { ...DEFAULT_STATE };
+        return { logs: [], versions: [], deployments: [] };
     }
 }
 
-function writeState(state) {
-    ensureStore();
-    fs.writeFileSync(STORE_PATH, JSON.stringify(state, null, 2), "utf8");
+function toDate(value) {
+    if (!value) return new Date();
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? new Date() : date;
 }
 
-function appendLog(logEntry) {
-    const state = readState();
-    state.logs.push(logEntry);
-    writeState(state);
+function normalizeDeploymentStatus(status) {
+    const value = String(status || "").toLowerCase();
+
+    if (value === "healthy" || value === "success") return "success";
+    if (value === "running") return "running";
+    if (value === "pending") return "pending";
+    if (value === "rolled_back" || value === "failedrolledback") return "rolled_back";
+    if (value === "failed" || value === "failednostableversion") return "failed";
+
+    return "pending";
 }
 
-function addVersion(versionEntry) {
-    const state = readState();
-    state.versions.push(versionEntry);
-    writeState(state);
-}
-
-function addDeployment(deploymentEntry) {
-    const state = readState();
-    state.deployments.push(deploymentEntry);
-    writeState(state);
-}
-
-function getLogs() {
-    return readState().logs;
-}
-
-function getVersions(imageName) {
-    const versions = readState().versions;
-
-    if (!imageName) {
-        return versions;
+async function migrateLegacyStateToMongo() {
+    const legacyState = readLegacyState();
+    if (!legacyState.logs.length && !legacyState.versions.length && !legacyState.deployments.length) {
+        return { migrated: false };
     }
 
-    return versions.filter((v) => v.imageName === imageName);
-}
+    const [existingLogs, existingVersions, existingDeployments] = await Promise.all([
+        LogRepository.listRecent(1),
+        VersionRepository.listAll(1),
+        DeploymentRepository.listAll(1)
+    ]);
 
-function getLastStableVersion(imageName) {
-    const versions = getVersions(imageName);
+    if (legacyState.logs.length > 0 && existingLogs.length === 0) {
+        for (const logEntry of legacyState.logs) {
+            if (!logEntry || typeof logEntry.message !== "string" || !logEntry.message.trim()) {
+                // Skip malformed legacy log entries instead of failing startup.
+                continue;
+            }
 
-    for (let i = versions.length - 1; i >= 0; i -= 1) {
-        if (versions[i].stable === true) {
-            return versions[i];
+            try {
+                await LogRepository.create({
+                    level: String(logEntry.level || "info").toLowerCase(),
+                    message: logEntry.message,
+                    deploymentId: logEntry.deploymentId || null,
+                    service: logEntry.service || null,
+                    appName: logEntry.appName || null,
+                    metadata: logEntry.metadata || {},
+                    timestamp: logEntry.timestamp
+                });
+            } catch (error) {
+                console.warn(`[StateMigration] Skipped invalid log entry: ${error.message}`);
+            }
         }
     }
 
-    return null;
+    if (legacyState.versions.length > 0 && existingVersions.length === 0) {
+        const latestStableByApp = new Map();
+
+        for (const versionEntry of legacyState.versions) {
+            if (!versionEntry || !versionEntry.imageName || !versionEntry.version) {
+                continue;
+            }
+
+            try {
+                await VersionRepository.create({
+                    appName: versionEntry.imageName,
+                    version: versionEntry.version,
+                    imageTag: `${versionEntry.imageName}:${versionEntry.version}`,
+                    deploymentId: versionEntry.deploymentId || null,
+                    stable: versionEntry.stable === true,
+                    createdAt: versionEntry.timestamp
+                });
+            } catch (error) {
+                console.warn(`[StateMigration] Skipped invalid version entry: ${error.message}`);
+                continue;
+            }
+
+            if (versionEntry.stable === true) {
+                const current = latestStableByApp.get(versionEntry.imageName);
+                const currentTime = current ? toDate(current.timestamp).getTime() : 0;
+                const candidateTime = toDate(versionEntry.timestamp).getTime();
+
+                if (!current || candidateTime >= currentTime) {
+                    latestStableByApp.set(versionEntry.imageName, versionEntry);
+                }
+            }
+        }
+
+        for (const stableVersion of latestStableByApp.values()) {
+            await StableVersionRepository.setStable({
+                appName: stableVersion.imageName,
+                version: stableVersion.version,
+                imageTag: `${stableVersion.imageName}:${stableVersion.version}`,
+                deploymentId: stableVersion.deploymentId || null
+            });
+        }
+    }
+
+    if (legacyState.deployments.length > 0 && existingDeployments.length === 0) {
+        for (const deploymentEntry of legacyState.deployments) {
+            if (!deploymentEntry || !deploymentEntry.imageName || !deploymentEntry.version) {
+                continue;
+            }
+
+            try {
+                await DeploymentRepository.create({
+                    appName: deploymentEntry.imageName,
+                    version: deploymentEntry.version,
+                    imageTag: `${deploymentEntry.imageName}:${deploymentEntry.version}`,
+                    status: normalizeDeploymentStatus(deploymentEntry.status),
+                    url: deploymentEntry.url || null,
+                    healthCheckUrl: deploymentEntry.healthCheckUrl || null,
+                    rollbackVersion: deploymentEntry.rollbackVersion || null,
+                    deploymentId: deploymentEntry.deploymentId || null,
+                    createdAt: deploymentEntry.timestamp
+                });
+            } catch (error) {
+                console.warn(`[StateMigration] Skipped invalid deployment entry: ${error.message}`);
+            }
+        }
+    }
+
+    return { migrated: true };
+}
+
+async function appendLog(logEntry) {
+    return LogRepository.create({
+        level: String(logEntry.level || "info").toLowerCase(),
+        message: logEntry.message,
+        deploymentId: logEntry.deploymentId || null,
+        service: logEntry.service || null,
+        appName: logEntry.appName || null,
+        metadata: logEntry.metadata || {},
+        timestamp: logEntry.timestamp
+    });
+}
+
+async function addVersion(versionEntry) {
+    await VersionRepository.create({
+        appName: versionEntry.imageName,
+        version: versionEntry.version,
+        imageTag: `${versionEntry.imageName}:${versionEntry.version}`,
+        deploymentId: versionEntry.deploymentId || null,
+        stable: versionEntry.stable === true,
+        createdAt: versionEntry.timestamp
+    });
+
+    if (versionEntry.stable === true) {
+        await StableVersionRepository.setStable({
+            appName: versionEntry.imageName,
+            version: versionEntry.version,
+            imageTag: `${versionEntry.imageName}:${versionEntry.version}`,
+            deploymentId: versionEntry.deploymentId || null
+        });
+    }
+}
+
+async function addDeployment(deploymentEntry) {
+    await DeploymentRepository.create({
+        appName: deploymentEntry.imageName,
+        version: deploymentEntry.version,
+        imageTag: `${deploymentEntry.imageName}:${deploymentEntry.version}`,
+        status: normalizeDeploymentStatus(deploymentEntry.status),
+        url: deploymentEntry.url || null,
+        healthCheckUrl: deploymentEntry.healthCheckUrl || null,
+        rollbackVersion: deploymentEntry.rollbackVersion || null,
+        deploymentId: deploymentEntry.deploymentId || null,
+        createdAt: deploymentEntry.timestamp
+    });
+}
+
+async function getLogs(limit = 100) {
+    return LogRepository.listRecent(limit);
+}
+
+async function getVersions(imageName) {
+    const versions = imageName
+        ? await VersionRepository.findAllByApp(imageName)
+        : await VersionRepository.listAll();
+
+    return versions.map((versionDocument) => ({
+        imageName: versionDocument.appName,
+        version: versionDocument.version,
+        deploymentId: versionDocument.deploymentId || null,
+        stable: versionDocument.stable === true,
+        timestamp: toDate(versionDocument.createdAt).toISOString()
+    }));
+}
+
+async function getLastStableVersion(imageName) {
+    const stableVersion = await StableVersionRepository.getStable(imageName);
+
+    if (stableVersion) {
+        return {
+            imageName: stableVersion.appName,
+            version: stableVersion.version,
+            deploymentId: stableVersion.deploymentId || null,
+            stable: true,
+            timestamp: toDate(stableVersion.markedAt).toISOString()
+        };
+    }
+
+    const versions = await getVersions(imageName);
+    return versions.find((version) => version.stable === true) || null;
 }
 
 module.exports = {
-    readState,
-    writeState,
+    migrateLegacyStateToMongo,
     appendLog,
     addVersion,
     addDeployment,

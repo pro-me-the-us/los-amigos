@@ -1,11 +1,12 @@
 {
+  "name": "los-amigos",
+  "private": true,
+  "version": "1.0.0",
   "dependencies": {
     "axios": "^1.13.6",
-<<<<<<< HEAD
-    "dockerode": "^4.0.10"
-=======
+    "dockerode": "^4.0.10",
     "dotenv": "^17.4.1",
+    "express": "^5.2.1",
     "mongodb": "^7.1.1"
->>>>>>> ee5b350 (Added DAL implementation and cleaned node_modules)
   }
 }
