@@ -14,18 +14,58 @@ class VersionRepository {
   }
 
   /**
-   * Register a new application version.
+   * Register an application version.
+   * Idempotent for the same appName + imageTag pair.
    * @param {Object} versionData - { appName, version, imageTag, commitHash, description }
-   * @returns {string} inserted document ID
+   * @returns {string} document ID
    */
   async create(versionData) {
     const col = await this._col();
-    const doc = {
-      ...versionData,
-      createdAt: versionData.createdAt ? new Date(versionData.createdAt) : new Date()
+    const createdAt = versionData.createdAt ? new Date(versionData.createdAt) : new Date();
+    const filter = {
+      appName: versionData.appName,
+      imageTag: versionData.imageTag
     };
-    const result = await col.insertOne(doc);
-    return result.insertedId.toString();
+
+    const setOnInsert = {
+      appName: versionData.appName,
+      version: versionData.version,
+      imageTag: versionData.imageTag,
+      createdAt
+    };
+
+    // Keep latest metadata on repeated deploys of the same image tag,
+    // but never downgrade a previously stable version to unstable.
+    const set = {};
+    if (versionData.deploymentId !== undefined) {
+      set.deploymentId = versionData.deploymentId;
+    }
+    if (versionData.commitHash !== undefined) {
+      set.commitHash = versionData.commitHash;
+    }
+    if (versionData.description !== undefined) {
+      set.description = versionData.description;
+    }
+    if (versionData.stable === true) {
+      set.stable = true;
+    }
+
+    const update = { $setOnInsert: setOnInsert };
+    if (Object.keys(set).length > 0) {
+      update.$set = set;
+    }
+
+    const result = await col.updateOne(filter, update, { upsert: true });
+    if (result.upsertedId) {
+      return result.upsertedId.toString();
+    }
+
+    const existing = await col.findOne(filter, { projection: { _id: 1 } });
+    if (!existing) {
+      throw new Error('Failed to read version document after upsert.');
+    }
+
+    return existing._id.toString();
   }
 
   /**

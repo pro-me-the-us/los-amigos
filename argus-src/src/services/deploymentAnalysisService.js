@@ -15,7 +15,7 @@ class DeploymentAnalysisService {
             await HealthCheckService.checkHealth(deploymentId, url);
 
         const failureResult =
-            FailureDetectionService.detectFailure(healthReport);
+            await FailureDetectionService.detectFailure(healthReport);
 
         let rollbackResult = null;
 
