@@ -1,4 +1,4 @@
-## A. Business Rules Implementation
+ ## A. Business Rules Implementation
 
 Business rules are conditions and policies the application enforces to govern its core operations. In **Argus**, business rules are implemented at the **Application/Service Layer**, keeping them separate from controllers (which only orchestrate requests) and repositories (which only handle persistence).
 
