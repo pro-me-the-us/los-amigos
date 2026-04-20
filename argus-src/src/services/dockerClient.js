@@ -44,10 +44,14 @@ async function runContainer(imageName, version, containerName, port) {
 }
 
 async function stopAndRemove(containerName) {
+    const container = docker.getContainer(containerName);
+
     try {
-        const container = docker.getContainer(containerName);
         await container.stop();
-        await container.remove();
+    } catch (err) {}
+
+    try {
+        await container.remove({ force: true });
     } catch (err) {}
 }
 

@@ -52,8 +52,6 @@ The HTTP handlers now call only `BusinessLogicLayer` methods:
 - `GET /versions` -> `BusinessLogicLayer.listVersions()`
 - `GET /logs` -> `BusinessLogicLayer.fetchLogs()`
 
-This keeps the presentation layer thin and moves business rules/validation to the service layer.
-
 ### 2) CLI Presentation (`argus-src/CLI.js`)
 
 CLI commands interact with HTTP presentation endpoints, which then call business modules:
@@ -67,14 +65,4 @@ CLI commands interact with HTTP presentation endpoints, which then call business
 
 ---
 
-## Explicit Interaction Endpoint
-
-To clearly demonstrate module usage from the presentation layer:
-
-- `GET /business-modules` returns the implemented business modules.
-- `GET /ui-interactions` returns UI component to business module mappings.
-
-Both are powered by:
-
-- `argus-src/src/services/businessModules.js`
 

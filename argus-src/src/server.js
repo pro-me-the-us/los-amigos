@@ -2,7 +2,7 @@ const { createApp } = require("./app");
 const { initializeDatabase, disconnect } = require("../dal/index");
 const { migrateLegacyStateToMongo } = require("./services/stateService");
 
-const PORT = 5000;
+const PORT = Number(process.env.PORT) || 5000;
 
 async function startServer() {
     try {
