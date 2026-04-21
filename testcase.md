@@ -74,7 +74,4 @@
   - Version entries appear in `application_versions`.
   - Stable pointer updates appear in `stable_versions`.
 
-## Out-of-scope
-- Authentication and authorization (login) test cases.
-- Performance/load/security penetration testing.
-- CI/CD pipeline deployment tests.
+
