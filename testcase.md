@@ -74,4 +74,3 @@
   - Version entries appear in `application_versions`.
   - Stable pointer updates appear in `stable_versions`.
 
-
