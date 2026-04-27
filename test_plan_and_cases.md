@@ -1,7 +1,5 @@
 # Q1 — Test Plan & Test Cases for Argus
 
-## Project: **Argus – Container Deployment and Rollback Automation System**
-
 ---
 
 # Part (a) — Test Plan
