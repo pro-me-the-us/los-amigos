@@ -58,6 +58,4 @@ Detailed reported output included:
 - Script assertion correctness improved:
   - `/versions` checks now handle PowerShell single-item JSON unwrapping (object vs array) correctly (`WB-20`).
 
-## 5) Conclusion
 
-The current build is stable against the executed white-box suite (`18/18 PASS`) and mostly complete on black-box coverage from the provided evidence. Remaining black-box gaps are test execution coverage gaps (`BB-11`, `BB-18`, and intended `BB-15` input), not observed product failures.

@@ -1,7 +1,7 @@
-# Graph Report - C:\SEM_6\SE_project\branched\los-amigos  (2026-04-18)
+# Graph Report - C:\SEM_6\SE_project\branched\los-amigos  (2026-04-21)
 
 ## Corpus Check
-- 32 files · ~90,527 words
+- 32 files · ~89,333 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
