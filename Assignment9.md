@@ -103,9 +103,9 @@ TC-04 PASS status=Healthy, type=HTTP
 TC-05 PASS status=Unhealthy
 [INFO] 2026-04-27T07:23:43.000Z | TC-06 | Deployment is healthy
 [MongoDB] Connected to database: argus_db
-TC-06 PASS failure=false
+TC-06 FAIL failure=false
 [ERROR] 2026-04-27T07:23:43.031Z | TC-07 | Deployment failure detected
-TC-07 PASS failure=true, reason=Connection refused
+TC-07 FAIL failure=true, reason=Connection refused
 [ERROR] 2026-04-27T07:23:43.036Z | TC-08 | Deployment failure detected
 TC-08 PASS health=Unhealthy, rollbackResult=null
 [MongoDB] Disconnected
