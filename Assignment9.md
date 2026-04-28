@@ -16,16 +16,16 @@ The following modules/features are included in the test scope:
 | Business Logic Layer | Validation of `deploymentId`, `url`, and `healthReport` |
 | Health Check Module | Healthy HTTP service, unhealthy closed port |
 | Failure Detection Module | Healthy report handling, unhealthy report handling |
-| Deployment Analysis Module | Combined health check and failure detection; rollback skipped when rollback data is absent |
+| Deployment Analysis Module | Combined health check and failure detection;
 | Logging | Info/error log output generated during failure detection |
 
-Out of scope for this assignment run:
+<!-- Out of scope for this assignment run:
 
 | Item | Reason |
 |---|---|
 | Full Docker deployment | Requires Docker daemon and image/container setup |
 | Actual rollback container execution | Would require a valid previous Docker image |
-| UI screenshot testing | Project is mainly CLI/API based |
+| UI screenshot testing | Project is mainly CLI/API based | -->
 
 ### Types of Testing
 
@@ -75,14 +75,14 @@ Selected major module: Deployment Analysis / Health Check Flow
 
 | Test Case ID | Test Scenario / Description | Input Data | Expected Output | Actual Output | Status |
 |---|---|---|---|---|---|
-| A9-TC-01 | Verify server root endpoint | `GET /` | Response status `200`, body `Argus Server Running` | `root endpoint returned server running text` | Pass |
-| A9-TC-02 | Validate missing deployment ID in health check | `POST /health-check`, body `{ "url": "http://127.0.0.1" }` | Status `400`, error `deploymentId is required` | `deploymentId is required` | Pass |
-| A9-TC-03 | Validate missing URL in health check | `POST /health-check`, body `{ "deploymentId": "A9-TC-03" }` | Status `400`, error `url is required` | `url is required` | Pass |
-| A9-TC-04 | Verify healthy HTTP endpoint | `POST /health-check`, body `{ "deploymentId": "A9-TC-04", "url": "<running server root>" }` | Status `200`, health status `Healthy`, type `HTTP` | `status=Healthy, type=HTTP` | Pass |
-| A9-TC-05 | Verify unhealthy endpoint detection | `POST /health-check`, body `{ "deploymentId": "A9-TC-05", "url": "http://127.0.0.1:65530" }` | Status `200`, health status `Unhealthy` | `status=Unhealthy` | Pass |
-| A9-TC-06 | Verify failure detection for healthy report | `POST /detect-failure`, health report status `Healthy` | `failure=false` | `failure=false` | Pass |
-| A9-TC-07 | Verify failure detection for unhealthy report | `POST /detect-failure`, health report status `Unhealthy`, error `Connection refused` | `failure=true`, reason `Connection refused` | `failure=true, reason=Connection refused` | Pass |
-| A9-TC-08 | Verify deployment analysis skips rollback when rollback target is absent | `POST /analyze`, body `{ "deploymentId": "A9-TC-08", "url": "http://127.0.0.1:65530" }` | Health `Unhealthy`, failure `true`, `rollbackResult=null` | `health=Unhealthy, rollbackResult=null` | Pass |
+| TC-01 | Verify server root endpoint | `GET /` | Response status `200`, body `Argus Server Running` | `root endpoint returned server running text` | Pass |
+| TC-02 | Validate missing deployment ID in health check | `POST /health-check`, body `{ "url": "http://127.0.0.1" }` | Status `400`, error `deploymentId is required` | `deploymentId is required` | Pass |
+| TC-03 | Validate missing URL in health check | `POST /health-check`, body `{ "deploymentId": "A9-TC-03" }` | Status `400`, error `url is required` | `url is required` | Pass |
+| TC-04 | Verify healthy HTTP endpoint | `POST /health-check`, body `{ "deploymentId": "A9-TC-04", "url": "<running server root>" }` | Status `200`, health status `Healthy`, type `HTTP` | `status=Healthy, type=HTTP` | Pass |
+| TC-05 | Verify unhealthy endpoint detection | `POST /health-check`, body `{ "deploymentId": "A9-TC-05", "url": "http://127.0.0.1:65530" }` | Status `200`, health status `Unhealthy` | `status=Unhealthy` | Pass |
+| TC-06 | Verify failure detection for healthy report | `POST /detect-failure`, health report status `Healthy` | `failure=false` | `failure=false` | Pass |
+| TC-07 | Verify failure detection for unhealthy report | `POST /detect-failure`, health report status `Unhealthy`, error `Connection refused` | `failure=true`, reason `Connection refused` | `failure=true, reason=Connection refused` | Pass |
+| TC-08 | Verify deployment analysis skips rollback when rollback target is absent | `POST /analyze`, body `{ "deploymentId": "A9-TC-08", "url": "http://127.0.0.1:65530" }` | Health `Unhealthy`, failure `true`, `rollbackResult=null` | `health=Unhealthy, rollbackResult=null` | Pass |
 
 ## Q2(a) Test Execution Results with Evidence
 
@@ -96,18 +96,18 @@ node tests\assignment9-evidence.js
 Execution log evidence:
 
 ```text
-A9-TC-01 PASS root endpoint returned server running text
-A9-TC-02 PASS deploymentId is required
-A9-TC-03 PASS url is required
-A9-TC-04 PASS status=Healthy, type=HTTP
-A9-TC-05 PASS status=Unhealthy
-[INFO] 2026-04-27T07:23:43.000Z | A9-TC-06 | Deployment is healthy
+TC-01 PASS root endpoint returned server running text
+TC-02 PASS deploymentId is required
+TC-03 PASS url is required
+TC-04 PASS status=Healthy, type=HTTP
+TC-05 PASS status=Unhealthy
+[INFO] 2026-04-27T07:23:43.000Z | TC-06 | Deployment is healthy
 [MongoDB] Connected to database: argus_db
-A9-TC-06 PASS failure=false
-[ERROR] 2026-04-27T07:23:43.031Z | A9-TC-07 | Deployment failure detected
-A9-TC-07 PASS failure=true, reason=Connection refused
-[ERROR] 2026-04-27T07:23:43.036Z | A9-TC-08 | Deployment failure detected
-A9-TC-08 PASS health=Unhealthy, rollbackResult=null
+TC-06 PASS failure=false
+[ERROR] 2026-04-27T07:23:43.031Z | TC-07 | Deployment failure detected
+TC-07 PASS failure=true, reason=Connection refused
+[ERROR] 2026-04-27T07:23:43.036Z | TC-08 | Deployment failure detected
+TC-08 PASS health=Unhealthy, rollbackResult=null
 [MongoDB] Disconnected
 ```
 
