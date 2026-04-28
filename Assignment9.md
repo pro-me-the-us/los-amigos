@@ -131,7 +131,7 @@ Summary:
 
 | Category | Total | Passed | Failed |
 |---|---:|---:|---:|
-| Assignment 9 selected module tests | 8 | 8 | 0 |
+| Assignment 9 selected module tests | 8 | 6 | 2 |
 | Existing regression tests | 1 suite | 1 suite | 0 |
 
 ## Q2(b) Defect Analysis
