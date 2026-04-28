@@ -4,4 +4,5 @@ node_modules/
 dist/
 logs/
 *.log
+*.pid
 data/state.json
