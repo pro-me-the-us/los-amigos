@@ -80,8 +80,8 @@ Selected major module: Deployment Analysis / Health Check Flow
 | TC-03 | Validate missing URL in health check | `POST /health-check`, body `{ "deploymentId": "A9-TC-03" }` | Status `400`, error `url is required` | `url is required` | Pass |
 | TC-04 | Verify healthy HTTP endpoint | `POST /health-check`, body `{ "deploymentId": "A9-TC-04", "url": "<running server root>" }` | Status `200`, health status `Healthy`, type `HTTP` | `status=Healthy, type=HTTP` | Pass |
 | TC-05 | Verify unhealthy endpoint detection | `POST /health-check`, body `{ "deploymentId": "A9-TC-05", "url": "http://127.0.0.1:65530" }` | Status `200`, health status `Unhealthy` | `status=Unhealthy` | Pass |
-| TC-06 | Verify failure detection for healthy report | `POST /detect-failure`, health report status `Healthy` | `failure=false` | `failure=false` | Pass |
-| TC-07 | Verify failure detection for unhealthy report | `POST /detect-failure`, health report status `Unhealthy`, error `Connection refused` | `failure=true`, reason `Connection refused` | `failure=true, reason=Connection refused` | Pass |
+| TC-06 | Verify failure detection for healthy report | `POST /detect-failure`, health report status `Healthy` | `failure=false` | `failure=false` | Fail |
+| TC-07 | Verify failure detection for unhealthy report | `POST /detect-failure`, health report status `Unhealthy`, error `Connection refused` | `failure=true`, reason `Connection refused` | `failure=true, reason=Connection refused` | Fail |
 | TC-08 | Verify deployment analysis skips rollback when rollback target is absent | `POST /analyze`, body `{ "deploymentId": "A9-TC-08", "url": "http://127.0.0.1:65530" }` | Health `Unhealthy`, failure `true`, `rollbackResult=null` | `health=Unhealthy, rollbackResult=null` | Pass |
 
 ## Q2(a) Test Execution Results with Evidence
